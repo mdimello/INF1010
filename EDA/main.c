@@ -1,55 +1,44 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include "myList.h"
+#include "abb.h"
 
-
-void printList( List* list )
+int main() 
 {
-	int code;
+	Abb * raiz, *temp;
 
-	if( lstIsEmpty( list ) == 1 )
-	{
-		printf( "Lista Vazia.\n" );
-		return;
-	}
-	else if( lstIsEmpty( list ) == 2 )
-	{
-		printf( "Lista nao criada.\n" );
-		return;
-	}
+	raiz = abb_cria();
+	raiz = abb_insere(raiz, 5);
+	raiz = abb_insere(raiz, 2);
+	raiz = abb_insere(raiz, 1);
+	raiz = abb_insere(raiz, 3);
+	raiz = abb_insere(raiz, 8);
+	raiz = abb_insere(raiz, 7);
+	raiz = abb_insere(raiz, 6);
+	raiz = abb_insere(raiz, 9);
+	printf("%s\n", abb_testa(raiz) ? "0 Arvore ok!" : "0 Arvore com defeito!");
 
-	code = lstPointToFirst( list );
-	while( code == 0 )
-	{
-		Type value;
-		lstGetCurrent( list, &value );
-		printf( "%d\n", value );
+	abb_mostra_arvore("\nEstrutura:", raiz);
+	abb_mostra_ordem("\nOrdem:", raiz);
 
-		code = lstPointToNext( list );
-	}
-}
+	printf( "\n" );
+	temp = abb_busca(raiz, 9);
+	printf("busca 9 e:  %s\n", temp ? "Achou!" : "Nao achou!");
+	temp = abb_busca(raiz, 4);
+	printf("busca 4 e:  %s\n", temp ? "Achou!" : "Nao achou!");
 
+	printf("\nremove e recoloca 6");
+	raiz = abb_retira(raiz,6);
+	raiz = abb_insere(raiz, 6);
+	printf("\n%s", abb_testa(raiz) ? "1 Arvore ok!" : "1 Arvore com defeito!");
+	abb_mostra_arvore("\nEstrutura:", raiz);
+	abb_mostra_ordem("\nOrdem:", raiz);
 
-int main( void )
-{
-	List* list = lstCreate( );
-	int value;
-	int code;
+	printf("\n\nremove 5");
+	raiz = abb_retira(raiz, 5);
+	printf("\n%s", abb_testa(raiz) ? "1 Arvore ok!" : "1 Arvore com defeito!");
+	abb_mostra_arvore("\nEstrutura:", raiz);
+	abb_mostra_ordem("\nOrdem:", raiz);
 
-	printList( list );
-	lstQueue( list, 2 );
-	lstQueue( list, 3 );
-	lstQueue( list, 4 );
-	lstPush( list, 1 );
-	printList( list );
-	code = lstPop( list, &value );
-	if( code == 0 )
-		printf( "Pop: %d\n", value );
+	printf( "\n" );
 
-	
-	list = lstDestroy( list );
-	printList( NULL );
-
-	system("pause");
 	return 0;
 }

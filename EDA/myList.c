@@ -26,10 +26,12 @@ struct _list
 List* lstCreate( void )
 {
 	List* list = ( List* ) malloc( sizeof( List ) );
-
-	list->first = NULL;
-	list->last  = NULL;
-	list->curr  = NULL;
+	if( list != NULL )
+	{
+		list->first = NULL;
+		list->last  = NULL;
+		list->curr  = NULL;
+	}
 
 	return list;
 }
