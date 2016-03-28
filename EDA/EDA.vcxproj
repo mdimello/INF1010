@@ -79,10 +79,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="abb.h" />
+    <ClInclude Include="heap.h" />
     <ClInclude Include="myList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="abb.c" />
+    <ClCompile Include="heap.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="myList.c" />
   </ItemGroup>

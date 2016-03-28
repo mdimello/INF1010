@@ -1,10 +1,11 @@
-﻿Build started 20/03/2016 15:26:03.
+﻿Build started 28/03/2016 02:53:33.
      1>Project "d:\Users\mdime\documents\visual studio 2012\Projects\EDA\EDA\EDA.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TC /analyze- /errorReport:prompt abb.c
-         abb.c
+         D:\Program Files (x86)\Microsoft Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TC /analyze- /errorReport:prompt heap.c
+         heap.c
        Link:
          D:\Program Files (x86)\Microsoft Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"d:\Users\mdime\documents\visual studio 2012\Projects\EDA\Debug\EDA.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"d:\Users\mdime\documents\visual studio 2012\Projects\EDA\Debug\EDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"d:\Users\mdime\documents\visual studio 2012\Projects\EDA\Debug\EDA.lib" /MACHINE:X86 Debug\abb.obj
+         Debug\heap.obj
          Debug\main.obj
          Debug\myList.obj
          EDA.vcxproj -> d:\Users\mdime\documents\visual studio 2012\Projects\EDA\Debug\EDA.exe
@@ -12,4 +13,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.31
+Time Elapsed 00:00:00.66

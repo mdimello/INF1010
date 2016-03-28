@@ -1,44 +1,38 @@
 #include <stdio.h>
-#include "abb.h"
+#include "heap.h"
 
-int main() 
-{
-	Abb * raiz, *temp;
 
-	raiz = abb_cria();
-	raiz = abb_insere(raiz, 5);
-	raiz = abb_insere(raiz, 2);
-	raiz = abb_insere(raiz, 1);
-	raiz = abb_insere(raiz, 3);
-	raiz = abb_insere(raiz, 8);
-	raiz = abb_insere(raiz, 7);
-	raiz = abb_insere(raiz, 6);
-	raiz = abb_insere(raiz, 9);
-	printf("%s\n", abb_testa(raiz) ? "0 Arvore ok!" : "0 Arvore com defeito!");
+int main(void) {
+    int i,n=8;
+	float info;
+	float v[]={25, 48, 37, 48, 57, 86, 33, 92};
+	float vMax[]={25, 48, 37, 48, 57, 86, 33, 92};
+	float vSort[] = {92,57, 86, 48, 25, 37, 33, 48 };
+	Heap* heap = heap_cria(8);
+	Heap* max_heap = heap_monta( n, vMax );
 
-	abb_mostra_arvore("\nEstrutura:", raiz);
-	abb_mostra_ordem("\nOrdem:", raiz);
+	heap_show( max_heap, "max heap=");
 
-	printf( "\n" );
-	temp = abb_busca(raiz, 9);
-	printf("busca 9 e:  %s\n", temp ? "Achou!" : "Nao achou!");
-	temp = abb_busca(raiz, 4);
-	printf("busca 4 e:  %s\n", temp ? "Achou!" : "Nao achou!");
+	heap_sort( n, vSort );
+	printf( "heap sort = {" );
+	for( i = 0; i <  n; i++ )
+	{
+		printf( " %.0f,", vSort[i] );
+	}
+	printf( " }\n" );
 
-	printf("\nremove e recoloca 6");
-	raiz = abb_retira(raiz,6);
-	raiz = abb_insere(raiz, 6);
-	printf("\n%s", abb_testa(raiz) ? "1 Arvore ok!" : "1 Arvore com defeito!");
-	abb_mostra_arvore("\nEstrutura:", raiz);
-	abb_mostra_ordem("\nOrdem:", raiz);
+	for (i=0;i<n;i++) {
+		heap_insere(heap,v[i]);
+		printf("insere %g, ", v[i]);
+		heap_show(heap, "heap=");
+	}
 
-	printf("\n\nremove 5");
-	raiz = abb_retira(raiz, 5);
-	printf("\n%s", abb_testa(raiz) ? "1 Arvore ok!" : "1 Arvore com defeito!");
-	abb_mostra_arvore("\nEstrutura:", raiz);
-	abb_mostra_ordem("\nOrdem:", raiz);
+	do{
+		info = heap_remove(heap);
+		printf("remove %g ", info);
+		heap_show(heap, "heap=");
+	}   while(info>0);
 
-	printf( "\n" );
-
+	heap=heap_libera(heap);
 	return 0;
 }
