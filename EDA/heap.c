@@ -92,9 +92,8 @@ int heap_insere(Heap* heap, float prioridade)
 
 
 
-static void corrige_abaixo( Heap* heap )
+static void corrige_abaixo( Heap* heap, int pai )
 {
-	int pai=0;
 	while( 2*pai+1 < heap->pos )
 	{
 		int filho_esq=2*pai+1;
@@ -138,7 +137,7 @@ float heap_remove( Heap* heap )
 		heap->prioridade[ 0 ] = heap->prioridade[ heap->pos-1 ];
 		heap->pos--;
 
-		corrige_abaixo( heap );
+		corrige_abaixo( heap, 0 );
 
 		return topo;
 	}
@@ -165,6 +164,7 @@ void heap_show( Heap* h, char* title )
 
 /*
  * Ordena uma sub arvore do heap:
+ * Similar à função corrige_abaixo.
  * 
  * Complexidade f(H) onde H = log n
  * O( H ) = O( log n )
@@ -173,7 +173,7 @@ void heap_show( Heap* h, char* title )
  * @param n   - numerno de elementos.
  * @param v   - vetor contendo os elementos.
  */
-static void max_heap( int pai, int n, float *v )
+static void max_heapify( int pai, int n, float *v )
 {
 	/*
 	 * Considerando um heap como uma árvore binária armazenada em um vetor, 
@@ -233,7 +233,7 @@ static void max_heap( int pai, int n, float *v )
 		 *
 		 *  f( h )
 		 */
-		max_heap( maior, n, v );
+		max_heapify( maior, n, v );
 	}
 }
 
@@ -268,6 +268,13 @@ Heap* heap_monta(int n, float* v )
 	{
 		return NULL;
 	}
+	heap->max = n;
+	heap->pos = 0;
+	heap->prioridade = ( float * ) malloc( n * sizeof( float ) );
+	for( i = 0; i < n; i++ )
+	{
+		heap->prioridade[i] = v[i];
+	}
 
 	/* 
 	 * Utilizando a propriedade do heap que diz que um heap é uma 
@@ -278,7 +285,12 @@ Heap* heap_monta(int n, float* v )
 	 */
 	for( i = ( n / 2 ) - 1; i >= 0; i-- )
 	{
-		max_heap( i, n, v );
+		/*
+		 * O(H)
+		 */
+		//max_heapify( i, n, heap->prioridade );
+
+		corrige_abaixo( heap, i );
 	}
 
 	heap->max = n;
@@ -319,13 +331,9 @@ void heap_sort( int n, float* v )
 	for( i = n; i > 1; i-- )
 	{
 		/* 
-		 * Cria um max heap com os elementos do vetor.
-		 * Pode ser utilizada a max_heap no lugar da heap_monta pois
-		 * somente o primeiro elemento está fora de ordem.
-		 *
 		 * Complexidade O( log n )
 		 */
-		max_heap( 0, i, v );
+		max_heapify( 0, i, v );
 
 		troca( 0, i - 1, v );
 	}
