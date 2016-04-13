@@ -1,1 +1,8 @@
 EDA.opensdf
+EDA.sdf
+EDA.sln
+EDA.v11.suo
+Debug/*
+EDA/Debug/*
+EDA/EDA.vcxproj.filters
+EDA/EDA.vcxproj
