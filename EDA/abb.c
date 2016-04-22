@@ -80,7 +80,9 @@ void abb_mostra_arvore( char* titulo, Abb* raiz )
 Abb* abb_busca( Abb* r, float info )
 {
 	if( ! r )
+	{
 		return NULL;
+	}
 
 	else if( r->info > info )
 	{
