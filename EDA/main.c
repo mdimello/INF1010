@@ -1,87 +1,59 @@
 #include <stdio.h>
-#include "arvb23.h"
+#include <stdlib.h>
+#include "set.h"
+#include "dset.h"
 
-
-struct _arvb23 {
-	int      kp, kg;   /* chaves: kp<kg, se kg existir. Se kg=-1, significa que ele não existe. */
-	ArvB23  *pai;
-	ArvB23  *esq;
-	ArvB23  *meio;
-	ArvB23  *dir;
-};
-
-void Mostra(char* titulo, ArvB23* raiz)
+void testeSet( )
 {
-	if (titulo != NULL) printf("%s ", titulo);
-	if (raiz != NULL) {
-		printf("<");
-		printf("%d ", raiz->kp);
-		if (raiz->kg == -1) printf(" - ");
-		else printf("%d", raiz->kg);
-		Mostra(NULL, raiz->esq);
-		Mostra(NULL, raiz->meio);
-		Mostra(NULL, raiz->dir);
-		printf(">");
-	}
-	else
-		printf(".");
-	if (titulo != NULL) {
-		printf("\n");
-	}
+	Set* s1 = setCreate(24);
+	Set* s2 = setCreate(24);
+	Set *uniao, *intersecao, *diferenca;
+	int i;
+	
+	setInsert(s1, 10); 	setInsert(s1, 15); 	setInsert(s1, 20);
+	//setInsert(s1, 80); 	setInsert(s1, 90); 	setInsert(s1, 100);
+	setShow("s1", s1);
+	setRemove(s1, 20);
+	setShow("s1 remove 20", s1);
+
+	setInsert(s2, 15); 	setInsert(s2, 20); 	//setInsert(s2, 40);
+	//setInsert(s2, 90); 	setInsert(s2, 120); 	setInsert(s2, 150);
+	setShow("s2", s2);
+	
+	uniao = setUnion(s1, s2);  
+	setShow("s1Us2", uniao);
+	
+	intersecao = setIntersection(s1, s2);   
+	setShow("s1Is2", intersecao);
+	
+	diferenca = setDifference(s2, s1);   
+	setShow("s2-s1", diferenca);
+
+	s1 = setDestroy(s1);
+	s2 = setDestroy(s1);
+	uniao = setDestroy(uniao);
+	intersecao = setDestroy(intersecao);
+	diferenca = setDestroy(diferenca);
 }
 
-
-
-
-void Testa(ArvB23* no) {
-	if (no == NULL) return;
-	if ((no->kg == -1) && (no->esq != NULL) && (no->dir != NULL))    printf("\nNo [%d,%d] tem filho a direita.");
-	if ((no->esq != NULL) && (no->meio == NULL))   printf("\nNo [%d,%d] nao tem filho a esquerda.");
-	if ((no->kg != -1) && (no->kp>no->kg))    printf("\nNo [%d,%d] fora de ordem.");
-	if ((no->esq) && (no->esq->pai != no))    printf("\nNo [%d,%d] filho a esquerda com ponteiro de pai errado.");
-	if ((no->meio) && (no->meio->pai != no))  printf("\nNo [%d,%d] filho do meio com ponteiro de pai errado.");
-	if ((no->dir) && (no->dir->pai != no))    printf("\nNo [%d,%d] filho a direita com ponteiro de pai errado.");
-	if ((no->kg != -1) && (no->kp>no->kg))  printf("\nNo [%d,%d] chave da direita menor que chave da esquerda.");
-	Testa(no->esq);
-	Testa(no->meio);
-	Testa(no->dir);
-}
-
-
-void imprimeOrdem(ArvB23* no) {
-	if (no != NULL) {
-		imprimeOrdem(no->esq);
-		printf("%d ", no->kp);
-		imprimeOrdem(no->meio);
-		if (no->kg != -1) {
-			printf("%d ", no->kg);
-			imprimeOrdem(no->dir);
-		}
-	}
-}
-
-
-
-int main(void)
+void testeDSet( )
 {
-	ArvB23* raiz = a23Cria(5);   Mostra("cria    5 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Insere(raiz, 12);	Mostra("Insere 12 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Insere(raiz, 17);	Mostra("Insere 17 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Insere(raiz, 2);	Mostra("Insere  2 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Insere(raiz, 15);	Mostra("Insere 15 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Insere(raiz, 4); 	Mostra("Insere  4 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Insere(raiz, 6);	Mostra("Insere  6 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Insere(raiz, 7);	Mostra("Insere  7 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
+	DSet* dset = dsCreate(6);
+	dsUnion (dset,0,1);
+	dsUnion (dset,2,4);
+	dsUnion (dset,4,5);
+	dsUnion (dset,5,3);
+	dsUnion (dset,3,2);
 
-	raiz = a23Retira(raiz, 5); Mostra("\nRetira  5 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Retira(raiz, 12);  Mostra("Retira 12 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Retira(raiz, 17);  Mostra("Retira 17 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Retira(raiz, 2);   Mostra("Retira  2 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Retira(raiz, 15);  Mostra("Retira 15 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Retira(raiz, 4);   Mostra("Retira  4 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Retira(raiz, 6);   Mostra("Retira  6 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	raiz = a23Retira(raiz, 7);   Mostra("Retira  7 =", raiz); Testa(raiz); imprimeOrdem(raiz); printf("\n");
-	printf("Vazia?\n");
+	printf("numero de conjuntos dijuntos = %d\n",dsNSets(dset));
+	dsShow("Particao\n",dset);
+}
+
+int main()
+{
+	testeSet( );
+
+	//testeDSet( );
 
 	return 0;
 }
