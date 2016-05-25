@@ -1,5 +1,7 @@
 #include <stdlib.h>
-#include "myList.h"
+#include <stdio.h>
+#include "list.h"
+
 
 
 typedef struct _node Node;
@@ -233,4 +235,32 @@ int lstGetCurrent( List* list, Type* info )
 	}
 
 	return 2;
+}
+
+
+
+int lstPrint( List* list )
+{
+	int code;
+
+	if( lstIsEmpty( list ) == 1 )
+	{
+		printf( "Lista Vazia.\n" );
+		return;
+	}
+	else if( lstIsEmpty( list ) == 2 )
+	{
+		printf( "Lista nao criada.\n" );
+		return;
+	}
+
+	code = lstPointToFirst( list );
+	while( code == 0 )
+	{
+		Type value;
+		lstGetCurrent( list, &value );
+		printf( "%d\n", value );
+
+		code = lstPointToNext( list );
+	}
 }

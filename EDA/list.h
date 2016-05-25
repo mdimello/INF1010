@@ -1,5 +1,5 @@
-#ifndef myList_h
-#define myList_h
+#ifndef list_h
+#define list_h
 
  
 
@@ -29,6 +29,7 @@ int lstPointToNext(List* list);
 
 int lstGetCurrent(List* list, Type* pinfo);
 
+int lstPrint( List* list );
 
 
-#endif /* myList_h */
+#endif /* list_h */
